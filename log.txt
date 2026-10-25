@@ -28,3 +28,30 @@ parent_agent=none
 ## [2026-10-25T07:39:45Z] Audit remaining empty rows and restore evidence-backed state handling
 
 ... (truncated for brevity) ...
+
+## [2026-10-25T10:00:00Z] Audit reconciliation — output.csv v commit 979f555
+
+This entry reconciles the audit transcript with the committed output.csv.
+
+**Current CSV state (commit 979f555):**
+- 518 data rows, numerically sorted by case_id (case_33 through case_550)
+- Status counts: 150 COMPLETE, 358 INCOMPLETE, 10 NOT_APPLICABLE
+- Two INCOMPLETE rows with empty step arrays: case_55 and case_61
+- All other INCOMPLETE rows have evidence-backed steps
+
+**Previously reported (stale transcript):**
+- The audit transcript listed 9 cases (case_33, case_35, case_50, case_52, case_53, case_39, and two others) as having empty steps
+- This has been reconciled: only case_55 and case_61 have empty steps in the committed output
+- The other seven cases (case_33, case_35, case_50, case_52, case_53, case_39) have valid step arrays in the current CSV
+
+**Evidence limitation for case_55 and case_61:**
+- case_55: pre-cutoff backup archive evidence gives no restore-permission proof; activity_4006 is identity-only; activity_3387 is post-cutoff. No contract-valid findings or remediation steps can be grounded without inferring state.
+- case_61: identity-link claim (activity_4007 ? object_19) exists but no attributable state proof for active flow or restore access at audit_at cutoff. No model was configured or called.
+
+**Sentinel audit result:**
+- Structural/package/security checks pass
+- Submission readiness: FAIL under INCOMPLETE-content contract due to two empty-step rows, but explicitly disclosed as known limitation
+
+**Action:** No full 518 rerun or package was performed during this audit. The current output.csv and code.zip at commit 979f555 are the accepted submission artifacts with the documented limitation.
+
+All prior session entries are preserved. This entry adds accurate, current-state reconciliation without altering historical records.
